@@ -1,4 +1,4 @@
-import OrderNote from "../models/orderNote.js";
+import OrderNote from "../models/OrderNote.js";
 import PDFDocument from "pdfkit";
 
 // ==========================
