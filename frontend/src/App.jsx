@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 import { Toaster } from "react-hot-toast";
+import SocialLoginSuccess from "./pages/SocialLoginSuccess";
 
 const App = () => {
   const navigate = useNavigate();
@@ -113,6 +114,7 @@ const App = () => {
         {/* Public Pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+         <Route path="/social-login-success" element={<SocialLoginSuccess />} />
       </Routes>
     </div>
   );
