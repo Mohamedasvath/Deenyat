@@ -1,8 +1,12 @@
 import express from "express";
-import passport from "passport";
-import jwt from "jsonwebtoken";
+import passport from "passport";  // IMPORTANT: must import passport
+import { signup, login,getAllUsers } from "../controllers/authController.js";
 
 const router = express.Router();
+
+// Normal auth
+router.post("/signup", signup);
+router.post("/login", login);
 
 // Google login start
 router.get(
@@ -15,22 +19,12 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { session: false }),
   (req, res) => {
-    // 🔥 REAL JWT (dummy-token illa)
-    const token = jwt.sign(
-      {
-        id: req.user.profile.id,
-        email: req.user.profile.emails[0].value,
-        name: req.user.profile.displayName,
-      },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    // You can customize token generation based on your logic
+    const token = req.user.token || "dummy-token";
 
-    // ✅ LIVE SAFE REDIRECT
-    res.redirect(
-      `${process.env.FRONTEND_URL}/social-login-success?token=${token}`
-    );
+    res.redirect(`https://deenyat.onrender.com/social-login-success?token=${token}`);
   }
 );
+router.get("/users", getAllUsers)
 
 export default router;
