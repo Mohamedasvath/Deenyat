@@ -26,15 +26,15 @@ const App = () => {
     const publicRoutes = ["/login", "/signup"];
 
     // Google redirect token
-    const params = new URLSearchParams(window.location.search);
-    const googleToken = params.get("token");
+    // const params = new URLSearchParams(window.location.search);
+    // const googleToken = params.get("token");
 
-    if (googleToken) {
-      localStorage.setItem("token", googleToken);
-      window.history.replaceState({}, document.title, "/");
-      navigate("/", { replace: true });
-      return;
-    }
+    // if (googleToken) {
+    //   localStorage.setItem("token", googleToken);
+    //   window.history.replaceState({}, document.title, "/");
+    //   navigate("/", { replace: true });
+    //   return;
+    // }
 
     // ✅ If no token, redirect to login immediately
     if (!token && !publicRoutes.includes(location.pathname)) {

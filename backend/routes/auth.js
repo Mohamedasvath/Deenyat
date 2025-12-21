@@ -1,30 +1,62 @@
 import express from "express";
-import passport from "passport";  // IMPORTANT: must import passport
-import { signup, login,getAllUsers } from "../controllers/authController.js";
+import passport from "passport";
+import jwt from "jsonwebtoken";
+import { signup, login, getAllUsers } from "../controllers/authController.js";
 
 const router = express.Router();
 
-// Normal auth
+/* =========================
+   NORMAL AUTH
+========================= */
 router.post("/signup", signup);
 router.post("/login", login);
 
-// Google login start
+/* =========================
+   GOOGLE AUTH START
+========================= */
 router.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
 );
 
-// Google callback
+/* =========================
+   GOOGLE CALLBACK
+========================= */
 router.get(
   "/google/callback",
   passport.authenticate("google", { session: false }),
   (req, res) => {
-    // You can customize token generation based on your logic
-    const token = req.user.token || "dummy-token";
+    try {
+      // Google profile
+      const profile = req.user.profile;
 
-    res.redirect(`https://deenyat.onrender.com/social-login-success?token=${token}`);
+      // 🔐 Create JWT (IMPORTANT)
+      const token = jwt.sign(
+        {
+          googleId: profile.id,
+          email: profile.emails?.[0]?.value,
+          name: profile.displayName,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }
+      );
+
+      // ✅ Redirect to FRONTEND (Vercel)
+      res.redirect(
+        `${process.env.FRONTEND_URL}/social-login-success?token=${token}`
+      );
+    } catch (error) {
+      console.error("Google Auth Error:", error);
+      res.redirect(`${process.env.FRONTEND_URL}/login`);
+    }
   }
 );
-router.get("/users", getAllUsers)
+
+/* =========================
+   ADMIN / USERS
+========================= */
+router.get("/users", getAllUsers);
 
 export default router;
