@@ -87,7 +87,7 @@ const Dashboard = () => {
     );
 
   return (
-    <div className="text-gray-900 dark:text-white w-full p-4">
+    <div className="text-gray-900 dark:text-white w-full p-4 mt-9">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
       {/* Stats Cards */}
