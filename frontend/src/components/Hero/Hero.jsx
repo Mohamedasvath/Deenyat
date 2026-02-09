@@ -12,7 +12,7 @@ const IslamicLanding = () => {
       <div className="absolute inset-0 lg:hidden">
         <img
           className="object-cover w-full h-full opacity-50"
-          src=""
+          src="https://riwaqalquran.com/wp-content/uploads/2023/07/the-importance-of-reciting-the-holy-quran-daily.jpg"
           alt="Islamic background mobile"
         />
       </div>
@@ -89,7 +89,7 @@ const IslamicLanding = () => {
           <div className="hidden lg:block">
             <img
               className="w-full h-auto mx-auto"
-              src=""
+              src="https://riwaqalquran.com/wp-content/uploads/2023/07/the-importance-of-reciting-the-holy-quran-daily.jpg"
               alt="Islamic products"
             />
           </div>
